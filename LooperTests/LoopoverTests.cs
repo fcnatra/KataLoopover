@@ -15,11 +15,16 @@ public class LoopoverTests
     [Fact]
     public void WhenAllCharAreInBoth_ReturnsAListWithMoves()
     {
-        char[][] mixedUpBoard = [['a','b'],['d','c']];
-        char[][] solvedBoard = [['a','b'],['c','d']];
-        List<string> expectedMoves = ["L1"];
+        char[][] solvedBoard = [
+            ['a','b'],
+            ['c','d']];
+        char[][] mixedUpBoard = [
+            ['a','b'],
+            ['d','c']];
+
+        List<string> expectedMoves = ["R1"];
 
         List<string> moves = Loopover.Solve(mixedUpBoard, solvedBoard);
-        Assert.True(moves.SequenceEqual(expectedMoves));
+        Assert.Equal(expectedMoves, moves);
     }
 }
