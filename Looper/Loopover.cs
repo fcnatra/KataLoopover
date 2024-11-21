@@ -31,34 +31,34 @@ public class Loopover
                 int colDistance = col - origin.Y;
 
                 if (TargetReached(rowDistance, colDistance)) continue;
-                if (ShouldMoveLeft(rowDistance)) moves.Add(SwitchLeft(board, origin, rowDistance));
-                if (ShouldMoveRight(rowDistance)) moves.Add(SwitchRight(board, origin, rowDistance));
+                if (ShouldMoveLeft(colDistance)) moves.Add(SwitchLeft(board, origin, colDistance));
+                if (ShouldMoveRight(colDistance)) moves.Add(SwitchRight(board, origin, colDistance));
             }
 
         return moves;
     }
 
-    private static string SwitchRight(char[][] board, Point origin, int rowDistance)
+    private static string SwitchRight(char[][] board, Point origin, int colDistance)
     {
         string row = new string(board[origin.X]);
-        int totalMoves = Math.Abs(rowDistance);
+        int totalMoves = Math.Abs(colDistance);
         string switchedRow = row[(row.Length - totalMoves)..] + row[..(row.Length - totalMoves)];
         board[origin.X] = switchedRow.ToCharArray();
         return $"R{totalMoves}";
     }
 
-    private static string SwitchLeft(char[][] board, Point origin, int rowDistance)
+    private static string SwitchLeft(char[][] board, Point origin, int colDistance)
     {
         string row = new string(board[origin.X]);
-        int totalMoves = Math.Abs(rowDistance);
+        int totalMoves = Math.Abs(colDistance);
         string switchedRow = row.Substring(totalMoves) + row[..totalMoves];
         board[origin.X] = switchedRow.ToCharArray();
         return $"L{totalMoves}";
     }
 
-    private static bool ShouldMoveRight(int rowDistance) => rowDistance > 0;
+    private static bool ShouldMoveRight(int colDistance) => colDistance < 0;
 
-    private static bool ShouldMoveLeft(int rowDistance) => rowDistance < 0;
+    private static bool ShouldMoveLeft(int colDistance) => colDistance > 0;
 
     private static bool TargetReached(int rowDistance, int colDistance) => rowDistance == 0 && colDistance == 0;
 

@@ -22,9 +22,24 @@ public class LoopoverTests
             ['a','b'],
             ['d','c']];
 
+        List<string> moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Assert.True(moves.Count > 0);
+    }
+
+    [Fact]
+    public void WhenOneCharIsOffToTheLeftOnRow1_ReturnsR1()
+    {
+        char[][] solvedBoard = [
+            ['a','b'],
+            ['c','d']];
+        char[][] mixedUpBoard = [
+            ['a','b'],
+            ['d','c']];
+
         List<string> expectedMoves = ["R1"];
 
         List<string> moves = Loopover.Solve(mixedUpBoard, solvedBoard);
         Assert.Equal(expectedMoves, moves);
     }
+
 }
