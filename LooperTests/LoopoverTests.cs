@@ -42,4 +42,19 @@ public class LoopoverTests
         Assert.Equal(expectedMoves, moves);
     }
 
+    [Fact]
+    public void WhenOneCharIsOffToTheLeftOnEachRow_ReturnsMovesToTheRight()
+    {
+        char[][] solvedBoard = [
+            ['a','b'],
+            ['c','d']];
+        char[][] mixedUpBoard = [
+            ['b','a'],
+            ['d','c']];
+
+        List<string> expectedMoves = ["R0", "R1"];
+
+        List<string> moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Assert.Equal(expectedMoves, moves);
+    }
 }

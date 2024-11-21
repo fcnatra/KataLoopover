@@ -31,29 +31,30 @@ public class Loopover
                 int colDistance = col - origin.Y;
 
                 if (TargetReached(rowDistance, colDistance)) continue;
-                if (ShouldMoveLeft(colDistance)) moves.Add(SwitchLeft(board, origin, colDistance));
-                if (ShouldMoveRight(colDistance)) moves.Add(SwitchRight(board, origin, colDistance));
+                
+                if (ShouldMoveLeft(colDistance)) moves.AddRange(SwitchLeft(board, origin, colDistance));
+                if (ShouldMoveRight(colDistance)) moves.AddRange(SwitchRight(board, origin, colDistance));
             }
 
         return moves;
     }
 
-    private static string SwitchRight(char[][] board, Point origin, int colDistance)
+    private static List<string> SwitchRight(char[][] board, Point origin, int colDistance)
     {
         string row = new string(board[origin.X]);
         int totalMoves = Math.Abs(colDistance);
         string switchedRow = row[(row.Length - totalMoves)..] + row[..(row.Length - totalMoves)];
         board[origin.X] = switchedRow.ToCharArray();
-        return $"R{totalMoves}";
+        return Enumerable.Repeat($"R{origin.X}", totalMoves).ToList();
     }
 
-    private static string SwitchLeft(char[][] board, Point origin, int colDistance)
+    private static List<string> SwitchLeft(char[][] board, Point origin, int colDistance)
     {
         string row = new string(board[origin.X]);
         int totalMoves = Math.Abs(colDistance);
         string switchedRow = row.Substring(totalMoves) + row[..totalMoves];
         board[origin.X] = switchedRow.ToCharArray();
-        return $"L{totalMoves}";
+        return Enumerable.Repeat($"L{origin.X}", totalMoves).ToList();
     }
 
     private static bool ShouldMoveRight(int colDistance) => colDistance < 0;
