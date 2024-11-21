@@ -8,13 +8,16 @@ public class Loopover
     bool canBeSolved = CheckAllCharsAreInBothBoards(mixedUpBoard, solvedBoard);
     if (!canBeSolved) return null;
 
-    List<string> solvedKata = [];
     var board = mixedUpBoard.Clone();
+    List<string> moves = GetMovesToSolve(board, solvedBoard);
 
-    
-
-    return ["L1"];
+    return moves;
   }
+
+    private static List<string> GetMovesToSolve(object board, char[][] solvedBoard)
+    {
+        return ["L1"];
+    }
 
     private static bool CheckAllCharsAreInBothBoards(char[][] mixedUpBoard, char[][] solvedBoard)
     {
