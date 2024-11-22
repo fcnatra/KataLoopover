@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualBasic;
 
 public class Loopover 
 {
     public static char[][]? LastBoardSolved {get; set;}
+    public record Result(char[][] Board, List<string> Moves);
 
-  public static List<string>? Solve(char[][] mixedUpBoard, char[][] solvedBoard) 
+  public static Result? Solve(char[][] mixedUpBoard, char[][] solvedBoard) 
   {
     bool canBeSolved = CheckAllCharsAreInBothBoards(mixedUpBoard, solvedBoard);
     if (!canBeSolved) return null;
@@ -16,7 +20,7 @@ public class Loopover
     List<string> moves = GetMoves(board, solvedBoard);
 
     LastBoardSolved = (char[][])board.Clone();
-    return moves;
+    return new Result(board, moves);
   }
 
     private static List<string> GetMoves(char[][] board, char[][] solvedBoard)
@@ -37,7 +41,7 @@ public class Loopover
                 if (TargetReached(rowDistance, colDistance)) continue;
                 
                 if (ShouldMoveLeft(colDistance)) moves.AddRange(SwitchLeft(board, ref currentLocation, colDistance));
-                if (ShouldMoveRight(colDistance)) moves.AddRange(SwitchRight(board, currentLocation, colDistance));
+                if (ShouldMoveRight(colDistance)) moves.AddRange(SwitchRight(board, ref currentLocation, colDistance));
                 if (ShouldMoveUp(rowDistance)) moves.AddRange(SwitchUp(board, ref currentLocation, rowDistance));
                 if (ShouldMoveDown(rowDistance)) moves.AddRange(SwitchDown(board, currentLocation, rowDistance));
             }
@@ -69,6 +73,7 @@ public class Loopover
             board[0][origin.Y] = temp;
             moves.Add($"D{origin.Y}");
         }
+        origin.X = (origin.X + totalMoves) % board.Length;
         return moves;
     }
 
@@ -94,22 +99,26 @@ public class Loopover
 
     private static bool ShouldMoveDown(int rowDistance) => rowDistance > 0;
 
-    private static IEnumerable<string> SwitchRight(char[][] board, Point origin, int colDistance)
+    private static IEnumerable<string> SwitchRight(char[][] board, ref Point origin, int colDistance)
     {
-        string row = new string(board[origin.X]);
+        var rowIndex = origin.X;
+        string row = new string(board[rowIndex]);
         int totalMoves = Math.Abs(colDistance);
         string switchedRow = row[(row.Length - totalMoves)..] + row[..(row.Length - totalMoves)];
-        board[origin.X] = switchedRow.ToCharArray();
+        board[rowIndex] = switchedRow.ToCharArray();
+        
+        origin.Y = (origin.Y + totalMoves) % board[rowIndex].Length;
         return Enumerable.Repeat($"R{origin.X}", totalMoves);
     }
 
     private static IEnumerable<string> SwitchLeft(char[][] board, ref Point origin, int colDistance)
     {
         string row = new string(board[origin.X]);
+        var rowIndex = origin.X;
         int totalMoves = Math.Abs(colDistance);
         string switchedRow = row.Substring(totalMoves) + row[..totalMoves];
-        board[origin.X] = switchedRow.ToCharArray();
-        origin.Y = (origin.Y + totalMoves) % board[0].Length;
+        board[rowIndex] = switchedRow.ToCharArray();
+        origin.Y -= totalMoves;
         return Enumerable.Repeat($"L{origin.X}", totalMoves);
     }
 

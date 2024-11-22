@@ -8,9 +8,9 @@ public class LoopoverTests
         char[][] mixedUpBoard = [['a','b'],['d','c']];
         char[][] solvedBoard = [['a','b'],['c','x']];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
         
-        Assert.Null(moves);
+        Assert.Null(result);
     }
 
     [Fact]
@@ -23,9 +23,9 @@ public class LoopoverTests
             ['a','b'],
             ['d','c']];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
 
-        Assert.True(moves?.Count > 0);
+        Assert.True(result?.Moves.Count > 0);
     }
 
     [Fact]
@@ -40,10 +40,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["L1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
         
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
  
     [Fact]
@@ -58,10 +58,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["L1", "L1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
         
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
  
     [Fact]
@@ -76,10 +76,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["L1", "L1", "L1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
         
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
  
     [Fact]
@@ -94,10 +94,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["R1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
         
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
 
     [Fact]
@@ -112,10 +112,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["L0", "L1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
 
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
 
     [Fact]
@@ -130,10 +130,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["U0"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
 
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
 
     [Fact]
@@ -148,10 +148,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["U1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
 
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
 
     [Fact]
@@ -170,10 +170,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["U1", "U1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
 
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
 
     [Fact]
@@ -196,10 +196,10 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["U1", "U1", "U1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
 
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
 
     [Fact]
@@ -218,9 +218,9 @@ public class LoopoverTests
 
         List<string> expectedMoves = ["D1"];
 
-        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
 
-        Assert.Equal(expectedMoves, moves);
-        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
     }
 }
