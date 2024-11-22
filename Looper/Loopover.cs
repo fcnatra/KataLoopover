@@ -36,9 +36,9 @@ public class Loopover
 
                 if (TargetReached(rowDistance, colDistance)) continue;
                 
-                if (ShouldMoveLeft(colDistance)) moves.AddRange(SwitchLeft(board, currentLocation, colDistance));
+                if (ShouldMoveLeft(colDistance)) moves.AddRange(SwitchLeft(board, ref currentLocation, colDistance));
                 if (ShouldMoveRight(colDistance)) moves.AddRange(SwitchRight(board, currentLocation, colDistance));
-                if (ShouldMoveUp(rowDistance)) moves.AddRange(SwitchUp(board, currentLocation, rowDistance));
+                if (ShouldMoveUp(rowDistance)) moves.AddRange(SwitchUp(board, ref currentLocation, rowDistance));
                 if (ShouldMoveDown(rowDistance)) moves.AddRange(SwitchDown(board, currentLocation, rowDistance));
             }
 
@@ -72,7 +72,7 @@ public class Loopover
         return moves;
     }
 
-    private static IEnumerable<string> SwitchUp(char[][] board, Point origin, int rowDistance)
+    private static IEnumerable<string> SwitchUp(char[][] board, ref Point origin, int rowDistance)
     {
         List<string> moves = [];
         int totalMoves = Math.Abs(rowDistance);
@@ -86,6 +86,7 @@ public class Loopover
             board[board.Length - 1][origin.Y] = temp;
             moves.Add($"U{origin.Y}");
         }
+        origin.X -= totalMoves;
         return moves;
     }
 
@@ -102,12 +103,13 @@ public class Loopover
         return Enumerable.Repeat($"R{origin.X}", totalMoves);
     }
 
-    private static IEnumerable<string> SwitchLeft(char[][] board, Point origin, int colDistance)
+    private static IEnumerable<string> SwitchLeft(char[][] board, ref Point origin, int colDistance)
     {
         string row = new string(board[origin.X]);
         int totalMoves = Math.Abs(colDistance);
         string switchedRow = row.Substring(totalMoves) + row[..totalMoves];
         board[origin.X] = switchedRow.ToCharArray();
+        origin.Y = (origin.Y + totalMoves) % board[0].Length;
         return Enumerable.Repeat($"L{origin.X}", totalMoves);
     }
 

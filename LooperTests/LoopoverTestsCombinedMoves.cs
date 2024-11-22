@@ -12,7 +12,7 @@ public class LoopoverTestsCombinedMoves
             ['c','b'],
             ['d','a']];
 
-        List<string> expectedMoves = ["L1", "U1"];
+        List<string> expectedMoves = ["L1", "U0"];
 
         List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
         
