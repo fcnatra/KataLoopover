@@ -119,7 +119,7 @@ public class LoopoverTests
     }
 
     [Fact]
-    public void WhenOneCharIsOffToTheBottomOnCol0_ReturnsD0()
+    public void WhenOneCharIsOffToTheBottomOnCol0_MovesCol0OneUp()
     {
         char[][] solvedBoard = [
             ['a','b'],
@@ -128,7 +128,7 @@ public class LoopoverTests
             ['c','b'],
             ['a','d']];
 
-        List<string> expectedMoves = ["D0"];
+        List<string> expectedMoves = ["U0"];
 
         List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
 
@@ -137,7 +137,7 @@ public class LoopoverTests
     }
 
     [Fact]
-    public void WhenOneCharIsOffToTheBottomOnCol1_ReturnsD1()
+    public void WhenOneCharIsOffToTheBottomOnCol1_MovesCol1OneUp()
     {
         char[][] solvedBoard = [
             ['a','b'],
@@ -145,6 +145,76 @@ public class LoopoverTests
         char[][] mixedUpBoard = [
             ['a','d'],
             ['c','b']];
+
+        List<string> expectedMoves = ["U1"];
+
+        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+
+        Assert.Equal(expectedMoves, moves);
+        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+    }
+
+    [Fact]
+    public void WhenOneCharIsOffBy2ToTheBottomOnCol1_MovesRow1TwiceUp()
+    {
+        char[][] solvedBoard = [
+            ['a','b'],
+            ['c','d'],
+            ['e','f'],
+            ['g','h']];
+        char[][] mixedUpBoard = [
+            ['a','f'],
+            ['c','h'],
+            ['e','b'],
+            ['g','d']];
+
+        List<string> expectedMoves = ["U1", "U1"];
+
+        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+
+        Assert.Equal(expectedMoves, moves);
+        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+    }
+
+    [Fact]
+    public void WhenOneCharIsOffBy3ToTheBottomOnCol1_Moves1stRow3TimesUp()
+    {
+        char[][] solvedBoard = [
+            ['a','b'],
+            ['c','d'],
+            ['e','f'],
+            ['g','h'],
+            ['i','j'],
+            ['k','l']];
+        char[][] mixedUpBoard = [
+            ['a','h'],
+            ['c','j'],
+            ['e','l'],
+            ['g','b'],
+            ['i','d'],
+            ['k','f']];
+
+        List<string> expectedMoves = ["U1", "U1", "U1"];
+
+        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+
+        Assert.Equal(expectedMoves, moves);
+        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+    }
+
+    [Fact]
+    public void WhenMoveingOnceDownIsCloserThan3Up_MovesOnceDown()
+    {
+        char[][] solvedBoard = [
+            ['a','b'],
+            ['c','d'],
+            ['e','f'],
+            ['g','h']];
+        char[][] mixedUpBoard = [
+            ['a','h'],
+            ['c','d'],
+            ['e','f'],
+            ['g','b']];
 
         List<string> expectedMoves = ["D1"];
 

@@ -89,9 +89,9 @@ public class Loopover
         return moves;
     }
 
-    private static bool ShouldMoveUp(int rowDistance) => rowDistance > 0;
+    private static bool ShouldMoveUp(int rowDistance) => rowDistance < 0;
 
-    private static bool ShouldMoveDown(int rowDistance) => rowDistance < 0;
+    private static bool ShouldMoveDown(int rowDistance) => rowDistance > 0;
 
     private static IEnumerable<string> SwitchRight(char[][] board, Point origin, int colDistance)
     {
