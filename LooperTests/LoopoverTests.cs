@@ -29,7 +29,7 @@ public class LoopoverTests
     }
 
     [Fact]
-    public void WhenOneCharIsOffToTheLeftOnRow1_ReturnsR1()
+    public void WhenOneCharIsOffToTheRight_Moves1Left()
     {
         char[][] solvedBoard = [
             ['a','b'],
@@ -38,25 +38,25 @@ public class LoopoverTests
             ['a','b'],
             ['d','c']];
 
-        List<string> expectedMoves = ["R1"];
+        List<string> expectedMoves = ["L1"];
 
         List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
         
         Assert.Equal(expectedMoves, moves);
         Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
     }
-
+ 
     [Fact]
-    public void WhenOneCharIsOffToTheLeftBy2ColsOnRow1_ReturnsR1R1()
+    public void WhenOneCharIsOffToTheRightBy2Cols_Moves2Right()
     {
         char[][] solvedBoard = [
             ['a','b','c'],
             ['d','e','f']];
         char[][] mixedUpBoard = [
             ['a','b','c'],
-            ['f','d','e']];
+            ['e','f','d']];
 
-        List<string> expectedMoves = ["R1", "R1"];
+        List<string> expectedMoves = ["L1", "L1"];
 
         List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
         
@@ -65,7 +65,7 @@ public class LoopoverTests
     }
 
     [Fact]
-    public void WhenOneCharIsOffToTheLeftOnEachRow_ReturnsMovesToTheRight()
+    public void WhenOneCharIsOffToTheRightOnEachRow_MovesToTheLeftOnEachRow()
     {
         char[][] solvedBoard = [
             ['a','b'],
@@ -74,7 +74,7 @@ public class LoopoverTests
             ['b','a'],
             ['d','c']];
 
-        List<string> expectedMoves = ["R0", "R1"];
+        List<string> expectedMoves = ["L0", "L1"];
 
         List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
 

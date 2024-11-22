@@ -24,21 +24,21 @@ public class Loopover
         var numOfRows = solvedBoard.Length;
         var numOfCols = solvedBoard[0].Length;
 
-        for (int row = 0; row < numOfRows; row++)
-            for (int col = 0; col < numOfCols; col++)
+        for (int rowInSolved = 0; rowInSolved < numOfRows; rowInSolved++)
+            for (int colInSolved = 0; colInSolved < numOfCols; colInSolved++)
             {
-                char target = solvedBoard[row][col];
-                Point origin = FindTargetInBoard(target, board);
+                char targetChar = solvedBoard[rowInSolved][colInSolved];
+                Point currentLocation = FindTargetInBoard(targetChar, board);
 
-                int rowDistance = row - origin.X;
-                int colDistance = col - origin.Y;
+                int rowDistance = rowInSolved - currentLocation.X;
+                int colDistance = colInSolved - currentLocation.Y;
 
                 if (TargetReached(rowDistance, colDistance)) continue;
                 
-                if (ShouldMoveLeft(colDistance)) moves.AddRange(SwitchLeft(board, origin, colDistance));
-                if (ShouldMoveRight(colDistance)) moves.AddRange(SwitchRight(board, origin, colDistance));
-                if (ShouldMoveUp(rowDistance)) moves.AddRange(SwitchUp(board, origin, rowDistance));
-                if (ShouldMoveDown(rowDistance)) moves.AddRange(SwitchDown(board, origin, rowDistance));
+                if (ShouldMoveLeft(colDistance)) moves.AddRange(SwitchLeft(board, currentLocation, colDistance));
+                if (ShouldMoveRight(colDistance)) moves.AddRange(SwitchRight(board, currentLocation, colDistance));
+                if (ShouldMoveUp(rowDistance)) moves.AddRange(SwitchUp(board, currentLocation, rowDistance));
+                if (ShouldMoveDown(rowDistance)) moves.AddRange(SwitchDown(board, currentLocation, rowDistance));
             }
 
         return moves;
@@ -100,9 +100,9 @@ public class Loopover
         return Enumerable.Repeat($"L{origin.X}", totalMoves);
     }
 
-    private static bool ShouldMoveRight(int colDistance) => colDistance < 0;
+    private static bool ShouldMoveRight(int colDistance) => colDistance > 0;
 
-    private static bool ShouldMoveLeft(int colDistance) => colDistance > 0;
+    private static bool ShouldMoveLeft(int colDistance) => colDistance < 0;
 
     private static bool TargetReached(int rowDistance, int colDistance) => rowDistance == 0 && colDistance == 0;
 
