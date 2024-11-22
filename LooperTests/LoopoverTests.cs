@@ -50,11 +50,11 @@ public class LoopoverTests
     public void WhenOneCharIsOffToTheRightBy2Cols_Moves2Right()
     {
         char[][] solvedBoard = [
-            ['a','b','c'],
-            ['d','e','f']];
+            ['a','b','c','d','e'],
+            ['f','g','h','i','j']];
         char[][] mixedUpBoard = [
-            ['a','b','c'],
-            ['e','f','d']];
+            ['a','b','c','d','e'],
+            ['i','j','f','g','h']];
 
         List<string> expectedMoves = ["L1", "L1"];
 
@@ -68,13 +68,31 @@ public class LoopoverTests
     public void WhenOneCharIsOffToTheRightBy3Cols_Moves3Right()
     {
         char[][] solvedBoard = [
+            ['a','b','c','d','e','f'],
+            ['g','h','i','j','k','l']];
+        char[][] mixedUpBoard = [
+            ['a','b','c','d','e','f'],
+            ['j','k','l','g','h','i']];
+
+        List<string> expectedMoves = ["L1", "L1", "L1"];
+
+        List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
+        
+        Assert.Equal(expectedMoves, moves);
+        Assert.Equal(solvedBoard, Loopover.LastBoardSolved);
+    }
+ 
+    [Fact]
+    public void WhenMovingOnceRightIsCloserThan3Left_MovesOnceRight()
+    {
+        char[][] solvedBoard = [
             ['a','b','c','d'],
             ['e','f','g','h']];
         char[][] mixedUpBoard = [
             ['a','b','c','d'],
             ['f','g','h','e']];
 
-        List<string> expectedMoves = ["L1", "L1", "L1"];
+        List<string> expectedMoves = ["R1"];
 
         List<string>? moves = Loopover.Solve(mixedUpBoard, solvedBoard);
         

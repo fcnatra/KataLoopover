@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Microsoft.VisualBasic;
 
 public class Loopover 
 {
@@ -12,13 +13,13 @@ public class Loopover
     if (!canBeSolved) return null;
 
     var board = (char[][])mixedUpBoard.Clone();
-    List<string> moves = GetMovesToSolve(board, solvedBoard);
+    List<string> moves = GetMoves(board, solvedBoard);
 
     LastBoardSolved = (char[][])board.Clone();
     return moves;
   }
 
-    private static List<string> GetMovesToSolve(char[][] board, char[][] solvedBoard)
+    private static List<string> GetMoves(char[][] board, char[][] solvedBoard)
     {
         List<string> moves = [];
         var numOfRows = solvedBoard.Length;
@@ -30,8 +31,8 @@ public class Loopover
                 char targetChar = solvedBoard[rowInSolved][colInSolved];
                 Point currentLocation = FindTargetInBoard(targetChar, board);
 
-                int rowDistance = rowInSolved - currentLocation.X;
-                int colDistance = colInSolved - currentLocation.Y;
+                int rowDistance = CalculateDistance(rowInSolved, currentLocation.X, numOfRows);
+                int colDistance = CalculateDistance(colInSolved, currentLocation.Y, numOfCols);
 
                 if (TargetReached(rowDistance, colDistance)) continue;
                 
@@ -42,6 +43,16 @@ public class Loopover
             }
 
         return moves;
+    }
+
+    private static int CalculateDistance(int targetPosition, int currentPosition, int upperBound)
+    {
+        int distance1 = targetPosition - currentPosition;
+
+        int distanceToUpperBound = upperBound-currentPosition;
+        int distance2 = distanceToUpperBound + targetPosition;        
+
+        return Math.Abs(distance1) <= Math.Abs(distance2) ? distance1 : distance2;
     }
 
     private static IEnumerable<string> SwitchDown(char[][] board, Point origin, int rowDistance)
