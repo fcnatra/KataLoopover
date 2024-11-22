@@ -211,9 +211,9 @@ public class LoopoverTests
             ['e','f'],
             ['g','h']];
         char[][] mixedUpBoard = [
-            ['a','h'],
-            ['c','d'],
-            ['e','f'],
+            ['a','d'],
+            ['c','f'],
+            ['e','h'],
             ['g','b']];
 
         List<string> expectedMoves = ["D1"];
