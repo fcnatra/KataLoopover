@@ -68,7 +68,7 @@ public class LoopoverTestsCombinedMoves
             ['d','e','f'],
             ['g','a','i']];
 
-        List<string> expectedMoves = ["L1", "U0", "U0"];
+        List<string> expectedMoves = ["L1", "D0", "U0"];
 
         Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
         

@@ -26,6 +26,7 @@ public class LoopoverTests
         Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
 
         Assert.True(result?.Moves.Count > 0);
+        Assert.Equal(solvedBoard, result?.Board);
     }
 
     [Fact]
@@ -63,7 +64,7 @@ public class LoopoverTests
         Assert.Equal(expectedMoves, result?.Moves);
         Assert.Equal(solvedBoard, result?.Board);
     }
- 
+
     [Fact]
     public void WhenOneCharIsOffToTheRightBy3Cols_Moves3Right()
     {
@@ -81,7 +82,7 @@ public class LoopoverTests
         Assert.Equal(expectedMoves, result?.Moves);
         Assert.Equal(solvedBoard, result?.Board);
     }
- 
+
     [Fact]
     public void WhenMovingOnceRightIsCloserThan3Left_MovesOnceRight()
     {
@@ -96,6 +97,50 @@ public class LoopoverTests
 
         Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
         
+        Assert.Equal(expectedMoves, result?.Moves);
+        Assert.Equal(solvedBoard, result?.Board);
+    }
+
+    [Fact]
+    public void When3x2FirstRowScrambled_UsesSecondRowAsAux()
+    {
+        char[][] solvedBoard = [
+            ['a','b','c'],
+            ['d','e','f']];
+        char[][] mixedUpBoard = [
+            ['b','a','c'],
+            ['d','e','f']];
+        /*
+         * - POSITIONING A
+         * L0
+         * acb
+         * def
+         * 
+         * -- POSITIONING B
+         * D2 - restore later
+         * acf
+         * deB
+         * 
+         * L1 - restore later
+         * acf
+         * eBd
+         * 
+         * U1 - positioning
+         * aBf
+         * ecd
+         *
+         * R1 - restore
+         * abf
+         * dec
+         *
+         * U2 - restore
+         * abc
+         * def
+         */
+        List<string> expectedMoves = ["L0", "D2", "L1", "U1", "R1", "U2"];
+
+        Loopover.Result? result = Loopover.Solve(mixedUpBoard, solvedBoard);
+
         Assert.Equal(expectedMoves, result?.Moves);
         Assert.Equal(solvedBoard, result?.Board);
     }
@@ -203,7 +248,7 @@ public class LoopoverTests
     }
 
     [Fact]
-    public void WhenMoveingOnceDownIsCloserThan3Up_MovesOnceDown()
+    public void WhenMovingOnceDownIsCloserThan3Up_MovesOnceDown()
     {
         char[][] solvedBoard = [
             ['a','b'],

@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.VisualBasic;
+﻿using System.Drawing;
 
-public class Loopover 
+public class Loopover
 {
-    public static char[][]? LastBoardSolved {get; set;}
+    public static char[][]? LastBoardSolved { get; set; }
     public record Result(char[][] Board, List<string> Moves);
 
-  public static Result? Solve(char[][] mixedUpBoard, char[][] solvedBoard) 
-  {
-    bool canBeSolved = CheckAllCharsAreInBothBoards(mixedUpBoard, solvedBoard);
-    if (!canBeSolved) return null;
+    public static Result? Solve(char[][] mixedUpBoard, char[][] solvedBoard)
+    {
+        bool canBeSolved = CheckAllCharsAreInBothBoards(mixedUpBoard, solvedBoard);
+        if (!canBeSolved) return null;
 
-    var board = (char[][])mixedUpBoard.Clone();
-    List<string> moves = GetMoves(board, solvedBoard);
+        var board = (char[][])mixedUpBoard.Clone();
+        List<string> moves = GetMoves(board, solvedBoard);
 
-    LastBoardSolved = (char[][])board.Clone();
-    return new Result(board, moves);
-  }
+        LastBoardSolved = (char[][])board.Clone();
+        return new Result(board, moves);
+    }
 
     private static List<string> GetMoves(char[][] board, char[][] solvedBoard)
     {
@@ -39,7 +33,7 @@ public class Loopover
                 int colDistance = CalculateDistance(colInSolved, currentLocation.Y, numOfCols);
 
                 if (TargetReached(rowDistance, colDistance)) continue;
-                
+
                 if (ShouldMoveLeft(colDistance)) moves.AddRange(SwitchLeft(board, ref currentLocation, colDistance));
                 if (ShouldMoveRight(colDistance)) moves.AddRange(SwitchRight(board, ref currentLocation, colDistance));
                 if (ShouldMoveUp(rowDistance)) moves.AddRange(SwitchUp(board, ref currentLocation, rowDistance));
@@ -53,8 +47,8 @@ public class Loopover
     {
         int distance1 = targetPosition - currentPosition;
 
-        int distanceToUpperBound = upperBound-currentPosition;
-        int distance2 = distanceToUpperBound + targetPosition;        
+        int distanceToUpperBound = upperBound - currentPosition;
+        int distance2 = distanceToUpperBound + targetPosition;
 
         return Math.Abs(distance1) <= Math.Abs(distance2) ? distance1 : distance2;
     }
@@ -106,7 +100,7 @@ public class Loopover
         int totalMoves = Math.Abs(colDistance);
         string switchedRow = row[(row.Length - totalMoves)..] + row[..(row.Length - totalMoves)];
         board[rowIndex] = switchedRow.ToCharArray();
-        
+
         origin.Y = (origin.Y + totalMoves) % board[rowIndex].Length;
         return Enumerable.Repeat($"R{origin.X}", totalMoves);
     }
